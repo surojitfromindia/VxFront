@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import AppStyle from "./css/App.module.css";
 import StudentList from "./components/StudentList";
 import StudentEntry from "./components/StudentEntry";
-import axios from "axios";
+import api from "./controllers/api";
 
 function App() {
   const [isServerOn, setServerOn] = useState(false);
@@ -21,8 +21,8 @@ function App() {
     }
   };
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/")
+    api
+      .get("/")
       .then((res) => {
         setServerOn(true);
       })
@@ -30,18 +30,39 @@ function App() {
   }, []);
 
   return !isServerOn ? (
-    <div className={AppStyle.App}>Can't connect to Server</div>
+    <div
+      style={{
+        display: "flex",
+        height: "100vh",
+        backgroundColor: "#ef4535",
+        justifyContent: "center",
+        alignItems: "center",
+        fontSize: " 2rem",
+        color: "white",
+      }}
+    >
+      Can't connect to Server
+    </div>
   ) : (
     <div className={AppStyle.App}>
       <div onChange={homechange} className={AppStyle.hea}>
-        <label className={AppStyle.labelC}>
-          <input hidden type="radio" name="homview" value="entry" />
-          Entry
+        <input
+          defaultChecked
+          id="ent"
+          hidden
+          type="radio"
+          name="homview"
+          value="entry"
+        />
+        <label htmlFor="ent" className={AppStyle.labelC}>
+          {" "}
+          Enlist
         </label>
 
-        <label className={AppStyle.labelC}>
-          <input hidden type="radio" name="homview" value="view" />
-          view
+        <input id="view" hidden type="radio" name="homview" value="view" />
+        <label htmlFor="view" className={AppStyle.labelC}>
+          {" "}
+          View
         </label>
       </div>
       <div className={AppStyle.bod}>{home}</div>

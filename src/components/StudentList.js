@@ -1,9 +1,10 @@
 import itemstyle from "../css/Item.module.css";
 import liststyle from "../css/StudentList.module.css";
-import axios from "axios";
+import api from "../controllers/api";
 import React from "react";
 import { useState, useEffect } from "react";
 import downloadpdf from "../controllers/download";
+import deleteCertificateRecord from "../controllers/deleteCertificate";
 
 var ls;
 export default function StudentList() {
@@ -15,11 +16,11 @@ export default function StudentList() {
   }, []);
 
   const getData = () => {
-    axios
-      .get("http://localhost:5000/api/student/certificates/")
+    api
+      .get("/api/student/certificates/")
       .then((res) => {
-        setStudentInfo(res.data);
-        ls = res.data;
+        setStudentInfo(res.data.reverse());
+        ls = res.data.reverse();
       })
       .catch((err) => {
         setLoadingText("Oops! Server Error!");
@@ -29,13 +30,26 @@ export default function StudentList() {
   const handleSearch = (ev) => {
     if (ev.target.value) {
       let fillterdname = ls.filter((sinf) => {
-        let p = sinf.student_name.toLowerCase().startsWith(ev.target.value);
+        let v = ev.target.value.toLowerCase();
+        let p =
+          sinf.student_name.toLowerCase().startsWith(v) ||
+          sinf.student_roll.toLowerCase().startsWith(v) ||
+          sinf.student_number.toLowerCase().startsWith(v) ||
+          sinf.student_type.toLowerCase().startsWith(v) ||
+          sinf.student_grade.toLowerCase().startsWith(v);
         return p;
       });
       setStudentInfo(fillterdname);
     } else getData();
   };
 
+  const ondeleteaction = (id, sname) => {
+    deleteCertificateRecord(id, sname);
+    let newList = studentInfo.filter((sinfo) => {
+      return sinfo._id !== id;
+    });
+    setStudentInfo([...newList]);
+  };
   return (
     <div className={liststyle.container}>
       {!studentInfo ? (
@@ -44,16 +58,20 @@ export default function StudentList() {
         <div>
           <div className={liststyle.searchboxCon}>
             <input
-              autoFocus={"true"}
+              autoFocus={true}
               className={liststyle.searchbox}
               onChange={handleSearch}
               type="text"
-              placeholder="Search"
+              placeholder="Search (Roll, Number, Name, Group, Grade )"
             />
           </div>
-          <div>
+          <div className={liststyle.list}>
             {studentInfo.map((student) => (
-              <Item info={student} key={`${student.student_number}`} />
+              <Item
+                ondeleteaction={ondeleteaction}
+                info={student}
+                key={`${student.student_number}${student.student_roll}`}
+              />
             ))}
           </div>
         </div>
@@ -62,27 +80,43 @@ export default function StudentList() {
   );
 }
 
-const Item = ({ info }) => {
+const Item = ({ info, ondeleteaction }) => {
+  const [count, setCount] = useState(0);
   const handledownload = async () => {
     downloadpdf(info);
+  };
+  var t;
+  const handleDelete = () => {
+    setCount(count + 1);
+    console.log(count);
+    t = setTimeout(() => {
+      setCount(0);
+    }, 2000);
+    if (count === 1) {
+      clearTimeout(t);
+      ondeleteaction(info._id, info.student_name);
+    }
   };
   return (
     <div className={itemstyle.container}>
       <div className={itemstyle.studenInfo}>
-        <p>
-          <strong>{info.student_name}</strong>
-        </p>
-        <p>
+        <strong>{info.student_name}</strong>
+        <div>
           <strong> {info.student_roll} </strong>
           {"  "}
           <strong>{info.student_number}</strong>
-          <br />
-          Is a {info.student_type} student.
-          <br /> certificate issued on {info.iss_date}
-        </p>
+          {"  "}
+          <strong>{info.student_type}</strong>
+        </div>
+        <strong> {info.student_grade} </strong>
+        <span>
+          certificate issued on <br /> {info.iss_date}
+        </span>
       </div>
       <div className={itemstyle.actionbuttoncontainer}>
-        <button className={itemstyle.btnEdit}>Edit</button>
+        <button onClick={handleDelete} className={itemstyle.btnDelete}>
+          {count === 1 ? "Again" : "Delete"}
+        </button>
         <button onClick={handledownload} className={itemstyle.btnDownload}>
           Download
         </button>

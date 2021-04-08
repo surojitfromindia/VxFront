@@ -2,34 +2,36 @@
   display: flex;
   flex-direction: column;
   justify-items: center;
-  color: white;
+  color: black;
 }
 
 .searchbox {
   flex: 1;
   font-size: 0.85rem;
-  padding: 13px;
   outline: none;
   border: none;
+  
 }
 
 .searchboxCon {
   position: fixed;
   display: flex;
-  bottom: 10px;
-  left: 20px;
-  right: 20px;
+  padding: 20px 21px;
+  bottom: 0px;
+  left: 0;
+  right: 0;
+  background-color: white;
+  box-shadow: 0 -2px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.list {
+  margin-bottom: 50px;
 }
 
 @media only screen and (min-width: 768px) {
   .searchboxCon {
     position: sticky;
-    top: 47px;
-    background-color: #242424;
+    top: 46px;
     margin: 20px 0px;
-  }
-  .searchbox {
-    color: white;
-    background-color: transparent;
   }
 }

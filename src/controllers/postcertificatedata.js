@@ -1,11 +1,8 @@
-import axios from "axios";
+import api from "../controllers/api";
 const uploadcertificateinfo = (info) => {
   return new Promise((resolve, rej) => {
-    axios({
-      url: "http://localhost:5000/api/student/certificate/new",
-      method: "POST",
-      data: info,
-    })
+    api
+      .post("/api/student/certificate/new", info)
       .then((res) => {
         resolve(res);
       })

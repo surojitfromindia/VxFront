@@ -1,51 +1,60 @@
 .container {
   display: flex;
-  padding: 20px 30px;
+  padding: 25px 20px;
   justify-content: space-between;
-  color: white;
-  background-color: #535353;
+  color: rgb(122, 122, 122);
+  background-color: #ffffff;
   margin: 12px 0;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.2);
 }
 
 .studenInfo {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  gap: 6px;
 }
-.studenInfo p {
-  margin: 2px 0;
+.studenInfo > strong:first-of-type {
+  color: red;
 }
 
 .actionbuttoncontainer {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: flex-end;
   gap: 15px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .btnDownload {
-  padding: 7px 12px;
+  padding: 10px 4px;
+  width: 78px;
+  border-radius: 3px;
   color: white;
   background-color: #00ad57;
   border: none;
   outline: none;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .btnDownload:hover {
-  background-color: #04723b;
+  background-color: #108349;
 }
 
-.btnEdit {
-  padding: 7px 12px;
+.btnDelete {
+  padding: 10px 4px;
+  width: 78px;
+  border-radius: 3px;
   color: white;
-  background-color: #db6300;
+  background-color: #ec4b45;
   border: none;
   outline: none;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-.btnEdit:hover {
-  background-color: #a74b00;
+.btnDelete:hover {
+  background-color: #da342e;
 }
 
 strong {

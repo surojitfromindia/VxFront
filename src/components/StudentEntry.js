@@ -1,17 +1,18 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import axios from "axios";
+
 import estyle from "../css/StudentEntry.module.css";
 import postce from "../controllers/postcertificatedata";
 import download from "../controllers/download";
+import api from "../controllers/api";
 let type = "";
 
 export default function StudentEntry({ predata }) {
-  const [isServerOn, setServerOn] = useState(false);
+  const [isServerOn, setServerOn] = useState(true);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/")
+    api
+      .get("")
       .then((res) => {
         setServerOn(true);
       })
@@ -42,7 +43,6 @@ export default function StudentEntry({ predata }) {
       student_roll: document.getElementById("roll").value.trim(),
       student_number: document.getElementById("number").value.trim(),
       student_grade: document.getElementById("grade").value.trim(),
-      //reverse date
       iss_date: document.getElementById("isdate").value.trim(),
       serial_no: document.getElementById("snum").value.trim(),
     };
@@ -50,21 +50,21 @@ export default function StudentEntry({ predata }) {
       .then((d) => {
         alert("Student Entry Successfull");
       })
-      .catch((err) => alert("Data Not Saved"));
+      .catch((err) => alert("Error! check entries again"));
   };
   return (
-    <div className={estyle.container}>
+    <main className={estyle.container}>
       {!isServerOn ? (
         <div>Oops! Sever Error</div>
       ) : (
         <div>
-          <h2>Enlist students</h2>
+          <h2>Enlist student</h2>
           <div className={estyle.warningbox}></div>
           <div className={estyle.form}>
             <div className={estyle.iwra}>
               <label htmlFor="snum">Serial number (00N)</label>
               <input
-                defaultValue={predata?.student_name}
+                placeholder={"Serial Number On Certificate Top (00N)"}
                 id="snum"
                 className={estyle.enbox}
                 type="text"
@@ -73,7 +73,7 @@ export default function StudentEntry({ predata }) {
             <div className={estyle.iwra}>
               <label htmlFor="sname">Student name</label>
               <input
-                defaultValue={predata?.student_name}
+                placeholder={"Student Name"}
                 id="sname"
                 className={estyle.enbox}
                 type="text"
@@ -82,7 +82,7 @@ export default function StudentEntry({ predata }) {
             <div className={estyle.iwra}>
               <label htmlFor="fname">Father name</label>
               <input
-                defaultValue={predata?.father_name}
+                placeholder={"Student Parent Name"}
                 id="fname"
                 className={estyle.enbox}
                 type="text"
@@ -123,11 +123,17 @@ export default function StudentEntry({ predata }) {
             </div>
             <div className={estyle.iwra}>
               <label htmlFor="year">Passing year</label>
-              <input id="year" className={estyle.enbox} type="number" />
+              <input
+                placeholder={"Passing Year greater than 2000"}
+                id="year"
+                className={estyle.enbox}
+                type="number"
+              />
             </div>
             <div className={estyle.iwra}>
               <label htmlFor="roll">Roll</label>
               <input
+                placeholder={"Student Roll"}
                 onChange={ongradechange}
                 id="roll"
                 className={estyle.enbox}
@@ -136,11 +142,17 @@ export default function StudentEntry({ predata }) {
             </div>
             <div className={estyle.iwra}>
               <label htmlFor="number">Number</label>
-              <input id="number" className={estyle.enbox} type="text" />
+              <input
+                placeholder={"Student Roll"}
+                id="number"
+                className={estyle.enbox}
+                type="text"
+              />
             </div>
             <div className={estyle.iwra}>
               <label htmlFor="grade">Grade</label>
               <input
+                placeholder={"Student Grade"}
                 type="text"
                 autoCapitalize={"words"}
                 id="grade"
@@ -163,6 +175,6 @@ export default function StudentEntry({ predata }) {
           </div>
         </div>
       )}
-    </div>
+    </main>
   );
 }
