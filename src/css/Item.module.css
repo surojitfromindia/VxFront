@@ -28,8 +28,9 @@
 }
 
 .btnDownload {
-  padding: 10px 4px;
-  width: 78px;
+  padding: 10px 6px;
+  font-weight: 600;
+  width: 90px;
   border-radius: 3px;
   color: white;
   background-color: #00ad57;
@@ -43,8 +44,9 @@
 }
 
 .btnDelete {
-  padding: 10px 4px;
-  width: 78px;
+  padding: 10px 6px;
+  font-weight: 600;
+  width: 90px;
   border-radius: 3px;
   color: white;
   background-color: #ec4b45;

@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 
 import estyle from "../css/StudentEntry.module.css";
 import postce from "../controllers/postcertificatedata";
-import download from "../controllers/download";
+import download from "../controllers/downloadCertificate";
 import api from "../controllers/api";
 let type = "";
 

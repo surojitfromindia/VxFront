@@ -1,11 +1,9 @@
-import itemstyle from "../css/Item.module.css";
 import liststyle from "../css/StudentList.module.css";
 import api from "../controllers/api";
 import React from "react";
 import { useState, useEffect } from "react";
-import downloadpdf from "../controllers/download";
 import deleteCertificateRecord from "../controllers/deleteCertificate";
-
+import ListItem from "./ListItem";
 var ls;
 export default function StudentList() {
   const [loadingText, setLoadingText] = useState("Loading ... ");
@@ -67,7 +65,7 @@ export default function StudentList() {
           </div>
           <div className={liststyle.list}>
             {studentInfo.map((student) => (
-              <Item
+              <ListItem
                 ondeleteaction={ondeleteaction}
                 info={student}
                 key={`${student.student_number}${student.student_roll}`}
@@ -79,48 +77,3 @@ export default function StudentList() {
     </div>
   );
 }
-
-const Item = ({ info, ondeleteaction }) => {
-  const [count, setCount] = useState(0);
-  const handledownload = async () => {
-    downloadpdf(info);
-  };
-  var t;
-  const handleDelete = () => {
-    setCount(count + 1);
-    console.log(count);
-    t = setTimeout(() => {
-      setCount(0);
-    }, 2000);
-    if (count === 1) {
-      clearTimeout(t);
-      ondeleteaction(info._id, info.student_name);
-    }
-  };
-  return (
-    <div className={itemstyle.container}>
-      <div className={itemstyle.studenInfo}>
-        <strong>{info.student_name}</strong>
-        <div>
-          <strong> {info.student_roll} </strong>
-          {"  "}
-          <strong>{info.student_number}</strong>
-          {"  "}
-          <strong>{info.student_type}</strong>
-        </div>
-        <strong> {info.student_grade} </strong>
-        <span>
-          certificate issued on <br /> {info.iss_date}
-        </span>
-      </div>
-      <div className={itemstyle.actionbuttoncontainer}>
-        <button onClick={handleDelete} className={itemstyle.btnDelete}>
-          {count === 1 ? "Again" : "Delete"}
-        </button>
-        <button onClick={handledownload} className={itemstyle.btnDownload}>
-          Download
-        </button>
-      </div>
-    </div>
-  );
-};

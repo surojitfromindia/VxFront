@@ -1,5 +1,5 @@
 
-import api from "../controllers/api";
+import api from "./api";
 
 const downloadCertificate = (info) => {
   let s1 = `file?roll=${info.student_roll}&number=${info.student_number}`;
