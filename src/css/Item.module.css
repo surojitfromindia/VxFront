@@ -1,0 +1,54 @@
+.container {
+  display: flex;
+  padding: 20px 30px;
+  justify-content: space-between;
+  color: white;
+  background-color: #535353;
+  margin: 12px 0;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+.studenInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.studenInfo p {
+  margin: 2px 0;
+}
+
+.actionbuttoncontainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 15px;
+}
+
+.btnDownload {
+  padding: 7px 12px;
+  color: white;
+  background-color: #00ad57;
+  border: none;
+  outline: none;
+}
+
+.btnDownload:hover {
+  background-color: #04723b;
+}
+
+.btnEdit {
+  padding: 7px 12px;
+  color: white;
+  background-color: #db6300;
+  border: none;
+  outline: none;
+}
+
+.btnEdit:hover {
+  background-color: #a74b00;
+}
+
+strong {
+  text-decoration: underline;
+  margin-right: 15px;
+}
