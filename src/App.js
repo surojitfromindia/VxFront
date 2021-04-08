@@ -45,20 +45,13 @@ function App() {
     </div>
   ) : (
     <div className={AppStyle.App}>
+      App version 1.0
       <div onChange={homechange} className={AppStyle.hea}>
-        <input
-          defaultChecked
-          id="ent"
-          hidden
-          type="radio"
-          name="homview"
-          value="entry"
-        />
+        <input id="ent" hidden type="radio" name="homview" value="entry" />
         <label htmlFor="ent" className={AppStyle.labelC}>
           {" "}
           Enlist
         </label>
-
         <input id="view" hidden type="radio" name="homview" value="view" />
         <label htmlFor="view" className={AppStyle.labelC}>
           {" "}
