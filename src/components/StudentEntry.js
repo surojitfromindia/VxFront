@@ -34,7 +34,8 @@ export default function StudentEntry({ predata }) {
     if (info?.student_number) download(info);
   };
 
-  const onsavbtnclick = async () => {
+  const onsavbtnclick = async (ev) => {
+    ev.preventDefault();
     let collecteddata = {
       student_name: document.getElementById("sname").value.trim(),
       father_name: document.getElementById("fname").value.trim(),
@@ -46,6 +47,7 @@ export default function StudentEntry({ predata }) {
       iss_date: document.getElementById("isdate").value.trim(),
       serial_no: document.getElementById("snum").value.trim(),
     };
+
     postce(collecteddata)
       .then((d) => {
         alert("Student Entry Successfull");
@@ -60,7 +62,7 @@ export default function StudentEntry({ predata }) {
         <div>
           <h2>Enlist student</h2>
           <div className={estyle.warningbox}></div>
-          <div className={estyle.form}>
+          <form name="f1" className={estyle.form} onSubmit={onsavbtnclick}>
             <div className={estyle.iwra}>
               <label htmlFor="snum">Serial number (00N)</label>
               <input
@@ -77,6 +79,8 @@ export default function StudentEntry({ predata }) {
                 id="sname"
                 className={estyle.enbox}
                 type="text"
+                pattern="[a-zA-Z\.]+(\s?[a-zA-Z\.]+)?\s[a-zA-Z]+"
+                title="Name must have at least one space. No number is allowed"
               />
             </div>
             <div className={estyle.iwra}>
@@ -86,6 +90,8 @@ export default function StudentEntry({ predata }) {
                 id="fname"
                 className={estyle.enbox}
                 type="text"
+                pattern="[a-zA-Z\.]+(\s?[a-zA-Z\.]+)?\s[a-zA-Z]+"
+                title="Name must have at least one space. No number is allowed"
               />
             </div>
             <div className={estyle.radio}>
@@ -126,6 +132,7 @@ export default function StudentEntry({ predata }) {
               <input
                 placeholder={"Passing Year greater than 2000"}
                 id="year"
+                min={2000}
                 className={estyle.enbox}
                 type="number"
               />
@@ -162,17 +169,24 @@ export default function StudentEntry({ predata }) {
             </div>
             <div className={estyle.iwra}>
               <label htmlFor="isdate">Issue Date (dd-mm-yyyy)</label>
-              <input id="isdate" className={estyle.enbox} type="Date" />
+              <input
+                required={true}
+                id="isdate"
+                className={estyle.enbox}
+                type="Date"
+              />
             </div>
             <div className={estyle.buttongroup}>
-              <button onClick={ondownloadclick} className={estyle.btnDownload}>
+              <button
+                tabIndex={-1}
+                onClick={ondownloadclick}
+                className={estyle.btnDownload}
+              >
                 Download
               </button>
-              <button onClick={onsavbtnclick} className={estyle.btnsave}>
-                Save
-              </button>
+              <button className={estyle.btnsave}>Save</button>
             </div>
-          </div>
+          </form>
         </div>
       )}
     </main>

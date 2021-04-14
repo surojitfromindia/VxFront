@@ -4,14 +4,41 @@ import React from "react";
 import { useState, useEffect } from "react";
 import deleteCertificateRecord from "../controllers/deleteCertificate";
 import ListItem from "./ListItem";
-var ls;
+var ls = [];
 export default function StudentList() {
   const [loadingText, setLoadingText] = useState("Loading ... ");
-  const [studentInfo, setStudentInfo] = useState();
+  const [studentInfo, setStudentInfo] = useState([]);
+  const [isNewMessageHidden, setIsNewMessageHidden] = useState(true);
+  const [newRecordCount, setNewRecordCount] = useState({ m: "", mid: 0 });
 
+  useEffect(
+    function () {
+      let i = setTimeout(() => {
+        setIsNewMessageHidden(!isNewMessageHidden);
+      }, 2000);
+      return () => clearTimeout(i);
+    },
+    [newRecordCount]
+  );
   useEffect(() => {
     getData();
   }, []);
+
+  useEffect(
+    function () {
+      if (studentInfo.length !== 0) {
+        let newRecordev = new EventSource(
+          `http://192.168.0.5:5000/api/student/certificate/${studentInfo.length}`
+        );
+        newRecordev.onmessage = (ev) => {
+          let j = JSON.parse(ev.data);
+          setNewRecordCount({ m: j.message, mid: ev.lastEventId });
+        };
+        return () => newRecordev.close();
+      }
+    },
+    [studentInfo]
+  );
 
   const getData = () => {
     api
@@ -64,6 +91,7 @@ export default function StudentList() {
             />
           </div>
           <div className={liststyle.list}>
+            {isNewMessageHidden ? "" : <div>{newRecordCount.m}</div>}
             {studentInfo.map((student) => (
               <ListItem
                 ondeleteaction={ondeleteaction}

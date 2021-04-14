@@ -10,6 +10,7 @@
   color: #397cd4;
   font-weight: 600;
 }
+
 .warningbox {
   display: none;
   padding: 15px;
@@ -25,6 +26,7 @@
   flex-direction: column;
   gap: 10px;
   width: 100%;
+  padding-bottom: 60px;
 }
 
 .iwra {
@@ -37,13 +39,17 @@
   padding: 12px;
   margin-top: 4px;
   background-color: #e9e9e9;
-  border: none;
+  border: 2px solid #e9e9e9;
   outline: none;
   border-radius: 5px;
   font-size: 1.05rem;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif, Helvetica,
     sans-serif;
+}
+
+.enbox:invalid {
+  border: 2px solid #f54b08;
 }
 .enbox:focus {
   border: 2px solid #1077ff;
@@ -74,7 +80,7 @@
 
 .btnDownload {
   flex: 1;
-  padding: 15px 42px;
+  padding: 15px 30px;
   color: white;
   background-color: #00ad57;
   border: none;
@@ -91,15 +97,15 @@
 }
 .btnsave {
   flex: 1;
-  padding: 15px 42px;
+  padding: 15px 30px;
   color: white;
-  background-color: #db6300;
+  background-color: #ff651e;
   border: none;
   outline: none;
 }
 
 .btnsave:hover {
-  background-color: #a74b00;
+  background-color: #c05d0b;
 }
 
 .btnsave:focus {
@@ -107,8 +113,15 @@
   background-color: #1077ff;
 }
 .buttongroup {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
   display: flex;
-  gap: 9px;
+}
+.buttongroup input {
+  font-size: 0.95rem;
+  text-align: center;
 }
 
 @media only screen and (min-width: 768px) {
@@ -138,5 +151,6 @@
     position: unset;
     justify-content: right;
     align-items: flex-end;
+    gap: 6px;
   }
 }
