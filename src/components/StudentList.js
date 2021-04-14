@@ -1,10 +1,11 @@
 import liststyle from "../css/StudentList.module.css";
 import api from "../controllers/api";
-import React from "react";
+import React, { Suspense } from "react";
 import { useState, useEffect } from "react";
 import deleteCertificateRecord from "../controllers/deleteCertificate";
-import ListItem from "./ListItem";
-var ls = [];
+//import ListItem from "./ListItem";
+const ListItem = React.lazy(() => import("./ListItem"));
+var ls;
 export default function StudentList() {
   const [loadingText, setLoadingText] = useState("Loading ... ");
   const [studentInfo, setStudentInfo] = useState([]);
@@ -15,7 +16,7 @@ export default function StudentList() {
     function () {
       let i = setTimeout(() => {
         setIsNewMessageHidden(!isNewMessageHidden);
-      }, 2000);
+      }, 5000);
       return () => clearTimeout(i);
     },
     [newRecordCount]
@@ -24,11 +25,12 @@ export default function StudentList() {
     getData();
   }, []);
 
+  //this has bugs
   useEffect(
     function () {
       if (studentInfo.length !== 0) {
         let newRecordev = new EventSource(
-          `http://192.168.0.5:5000/api/student/certificate/${studentInfo.length}`
+          `http://192.168.0.5:5000/api/student/certificate/${ls.length}`
         );
         newRecordev.onmessage = (ev) => {
           let j = JSON.parse(ev.data);
@@ -93,11 +95,13 @@ export default function StudentList() {
           <div className={liststyle.list}>
             {isNewMessageHidden ? "" : <div>{newRecordCount.m}</div>}
             {studentInfo.map((student) => (
-              <ListItem
-                ondeleteaction={ondeleteaction}
-                info={student}
-                key={`${student.student_number}${student.student_roll}`}
-              />
+              <Suspense fallback={<div>item loading</div>}>
+                <ListItem
+                  ondeleteaction={ondeleteaction}
+                  info={student}
+                  key={`${student._id}`}
+                />
+              </Suspense>
             ))}
           </div>
         </div>
