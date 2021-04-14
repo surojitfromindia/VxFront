@@ -45,7 +45,7 @@ export default function StudentList() {
       .get("/api/student/certificates/")
       .then((res) => {
         setStudentInfo(res.data.reverse());
-        ls = res.data.reverse();
+        ls = res.data;
       })
       .catch((err) => {
         setLoadingText("Oops! Server Error!");
