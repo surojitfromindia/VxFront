@@ -30,7 +30,7 @@ export default function StudentList() {
     function () {
       if (studentInfo.length !== 0) {
         let newRecordev = new EventSource(
-          `http://192.168.0.5:5000/api/student/certificate/${ls.length}`
+          `https://vxback.herokuapp.com/api/student/certificate/${ls.length}`
         );
         newRecordev.onmessage = (ev) => {
           let j = JSON.parse(ev.data);
