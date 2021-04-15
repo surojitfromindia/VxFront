@@ -58,7 +58,7 @@ function App() {
         color: "white",
       }}
     >
-      Can't connect to Server
+      Connecting to Server...Wait
     </div>
   ) : (
     <div className={AppStyle.App}>

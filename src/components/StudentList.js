@@ -6,6 +6,9 @@ import deleteCertificateRecord from "../controllers/deleteCertificate";
 //import ListItem from "./ListItem";
 const ListItem = React.lazy(() => import("./ListItem"));
 var ls;
+
+let s1 = "https://vxback.herokuapp.com";
+let s2 = "http://localhost:5000";
 export default function StudentList() {
   const [loadingText, setLoadingText] = useState("Loading ... ");
   const [studentInfo, setStudentInfo] = useState([]);
@@ -30,7 +33,7 @@ export default function StudentList() {
     function () {
       if (studentInfo.length !== 0) {
         let newRecordev = new EventSource(
-          `https://vxback.herokuapp.com/api/student/certificate/${ls.length}`
+          `${s1}/api/student/certificate/${ls.length}`
         );
         newRecordev.onmessage = (ev) => {
           let j = JSON.parse(ev.data);
@@ -95,7 +98,10 @@ export default function StudentList() {
           <div className={liststyle.list}>
             {isNewMessageHidden ? "" : <div>{newRecordCount.m}</div>}
             {studentInfo.map((student) => (
-              <Suspense fallback={<div>item loading</div>}>
+              <Suspense
+                key={`${student._id}`}
+                fallback={<div>item loading</div>}
+              >
                 <ListItem
                   ondeleteaction={ondeleteaction}
                   info={student}
