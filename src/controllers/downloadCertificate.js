@@ -1,4 +1,3 @@
-
 import api from "./api";
 
 const downloadCertificate = (info) => {
@@ -14,7 +13,7 @@ const downloadCertificate = (info) => {
       link.href = url;
       link.setAttribute(
         "download",
-        `${info.student_roll + info.student_number}.docx`
+        `${info.student_roll + info.student_name + info.student_number}.docx`
       );
       document.body.appendChild(link);
       link.click();

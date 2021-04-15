@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import itemstyle from "../css/Item.module.css";
 import downloadpdf from "../controllers/downloadCertificate";
 export default function ListItem({ info, ondeleteaction }) {
@@ -7,15 +7,19 @@ export default function ListItem({ info, ondeleteaction }) {
   const handledownload = async () => {
     downloadpdf(info);
   };
-  var t;
-  const handleDelete = () => {
-    setCount(count + 1);
-    console.log(count);
-    t = setTimeout(() => {
+
+  useEffect(() => {
+    var t = setTimeout(() => {
       setCount(0);
     }, 2000);
-    if (count === 1) {
+    return () => {
       clearTimeout(t);
+    };
+  }, [count]);
+
+  const handleDelete = () => {
+    setCount(count + 1);
+    if (count === 1) {
       ondeleteaction(info._id, info.student_name);
     }
   };

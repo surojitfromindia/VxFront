@@ -1,6 +1,10 @@
 import axios from "axios";
 
+let s1 = "https://vxback.herokuapp.com";
+let s2 = "http://localhost:5000";
 export default axios.create({
-  baseURL: "http://192.168.0.5:5000",
-  timeout: 2000,
+  baseURL: s1,
+  headers: {
+    "Access-Control-Allow-Origin": "*",
+  },
 });
